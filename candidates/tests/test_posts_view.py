@@ -23,6 +23,15 @@ class TestPostsView(UK2015ExamplesMixin, WebTest):
             )
         )
 
+    def test_elections_link_to_constituencies_page(self):
+
+        response = self.app.get('/posts')
+
+        e_heading = response.html.find('h4', text='2015 General Election')
+        expected_link_element = e_heading.parent
+        self.assertEqual(expected_link_element.name, 'a')
+        self.assertEqual(expected_link_element['href'], '/election/2015/constituencies')
+
     def test_two_elections_posts_page(self):
 
         self.earlier_election.current = True
